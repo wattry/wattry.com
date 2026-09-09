@@ -16,7 +16,7 @@ const Root = styled('header')(({ theme }) => ({
 export default function Header(): JSX.Element {
   return (
     <Root>
-      <Typography variant='h1'>Explore</Typography>
+      <Typography variant='h1'></Typography>
     </Root>
   );
 }
