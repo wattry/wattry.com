@@ -40,6 +40,7 @@
     "preview": "vite preview",
     "tc": "npx tsc --noEmit",
     "cf:deploy": "wrangler deploy",
+    "site:deploy": "pnpm build && wrangler deploy -c wrangler.site.jsonc",
     "cf:dev": "wrangler dev",
     "cf:start": "wrangler dev"
   },

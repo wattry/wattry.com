@@ -1,0 +1,28 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "wattry-com",
+	"account_id": "47e3faccce876684f7fe752fe5e04d31",
+	"compatibility_date": "2026-07-02",
+	"assets": {
+		"directory": "./dist",
+		"not_found_handling": "single-page-application"
+	},
+	"workers_dev": false,
+	"preview_urls": false,
+	"routes": [
+		{
+			"pattern": "wattry.com",
+			"zone_name": "wattry.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.wattry.com",
+			"zone_name": "wattry.com",
+			"custom_domain": true
+		}
+	],
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1
+	}
+}
