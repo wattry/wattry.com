@@ -20,7 +20,7 @@
 			}
 		}
 	],
-	"workers_dev": true,
+	"workers_dev": false,
 	"preview_urls": false,
 	"compatibility_date": "2026-07-02",
 	"routes": [
