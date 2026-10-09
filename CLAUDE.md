@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-Package manager: **pnpm** (`pnpm install`). `@wattry/promises` comes from GitHub Packages (`npm.pkg.github.com`, scope `@wattry`); local install needs a GitHub Packages token in `~/.npmrc`.
+Package manager: **pnpm** (`pnpm install`). `@wattry/promises` comes from GitHub Packages (`npm.pkg.github.com`, scope `@wattry`); CI authenticates with `GITHUB_TOKEN`, local installs need a GitHub Packages token in `~/.npmrc`.
 
 - `pnpm dev` — Vite dev server on port 3000 (`pnpm start` is the same with `PORT=3000`); env loaded from repo-root `.env`
 - `pnpm build` — production build to repo-root `dist/` (`prebuild` wipes legacy `docs/` and `build/`)
@@ -16,7 +16,7 @@ No lint script, no unit tests. `playwright.config.ts` exists but no spec files a
 
 ## Deployment
 
-- **Site:** assets-only Cloudflare Worker `wattry-com` (`wrangler.site.jsonc`, SPA fallback) serving `dist/` at `wattry.com` + `www.wattry.com`. No CI: deploy from a local machine with `pnpm site:deploy`. Build reads `VITE_CF_ENDPOINT` and `POSTHOG_API_KEY` / `POSTHOG_PROJECT_ID` / `POSTHOG_HOST` from repo-root `.env` (PostHog sourcemap plugin in `vite.config.ts`).
+- **Site:** assets-only Cloudflare Worker `wattry-com` (`wrangler.site.jsonc`, SPA fallback) serving `dist/` at `wattry.com` + `www.wattry.com`. `.github/workflows/deploy.yml` deploys both Workers on push to `main` via `cloudflare/wrangler-action` (`CLOUDFLARE_API_TOKEN` secret). Build needs `VITE_CF_ENDPOINT` (repo var) and `POSTHOG_API_KEY` / `POSTHOG_PROJECT_ID` / `POSTHOG_HOST` (secrets) for the PostHog sourcemap plugin in `vite.config.ts`; locally these come from repo-root `.env` and `pnpm site:deploy` does the same build + deploy.
 - **API:** Cloudflare Worker `wattry-api-com` (`workers/src/worker.js`) served at `api.wattry.com` (`wrangler.jsonc`, account `47e3faccce876684f7fe752fe5e04d31`). Bindings: D1 `DB` (schema in `workers/schema.sql`, `scores` table) and a `ratelimits` binding `SCORE_RATE_LIMITER` (1 req / 60 s per IP). Routes: `GET /typetest/board`, `POST /typetest/score`. CORS allows `https://wattry.com`, or `http://localhost:3000` when `env.LOCAL` is set. `SNIPPET_IDS` in the worker must stay in sync with `src/static/snippets.ts`. See `AGENTS.md` for Cloudflare doc-retrieval rules.
 
 ## Architecture
