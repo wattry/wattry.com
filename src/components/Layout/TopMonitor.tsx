@@ -62,7 +62,7 @@ function TopMonitor({ onExit }: TopMonitorProps) {
   const uptime = `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
   const heap = (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory;
   const header = [
-    `wattry.dev top — uptime ${uptime}`,
+    `wattry.com top — uptime ${uptime}`,
     heap ? `js heap: ${(heap.usedJSHeapSize / 1048576).toFixed(1)} MiB` : null,
     '',
     '  PID  NAME            CPU%   MEM%',
